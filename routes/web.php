@@ -3,10 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CheckListController;
 use App\Http\Controllers\Dashboard;
-use App\Http\Controllers\DeviceTokenController;
 use App\Http\Controllers\Profile;
 use App\Http\Controllers\Tasks;
-use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes
@@ -28,12 +26,6 @@ Route::middleware('guest')->group(function () {
 
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
-
-    Route::get('/test-notification', function () {
-        $user = \App\Models\User::first();
-        $user->notify(new \App\Notifications\TestNotification());
-        return 'Notification sent!';
-    });
 
     // Dashboard
     Route::get('/dashboard', [Dashboard::class, 'dashboardIndex'])->name('dashboard');
@@ -64,20 +56,6 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/checklist/{groupId}/clear-items', [CheckListController::class, 'clearItems'])->name('checklist.clearItems');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
-    Route::post('/device-token', [DeviceTokenController::class, 'store']);
-
-
-    Route::get('/check-reminders', function () {
-        $user = Auth::user();
-        $reminders = Task::where('user_id', $user->id)
-            ->where('status', 0)
-            ->whereBetween('reminder_datetime', [now()->subMinute(), now()])
-            ->get(['id', 'title']);
-        return response()->json(['reminders' => $reminders]);
-    });
-
 
 });
 

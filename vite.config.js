@@ -4,7 +4,7 @@ import laravel from 'laravel-vite-plugin';
 
 // vite.config.js
 export default defineConfig({
-    base: process.env.APP_ENV === 'production' ? '/your/' : '/',
+    // base: process.env.APP_ENV === 'production' ? '/your/' : '/',
     server: {
         host: '127.0.0.1',
         port: 5173,

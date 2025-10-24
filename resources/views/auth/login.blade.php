@@ -7,12 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DoQuest | Login</title>
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
-    @if (env('APP_ENV') === 'local')
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @else
-        <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
-        <script src="{{ asset('build/assets/app.js') }}" defer></script>
-    @endif
+    <script src="{{ asset('js/auth.js') }}" defer></script>
+    <script src="{{ asset('js/swal.js') }}" defer></script>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 

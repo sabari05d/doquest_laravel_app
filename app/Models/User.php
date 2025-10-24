@@ -15,15 +15,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class);
     }
-
-
-    public function routeNotificationForFcm()
-    {
-        return $this->deviceTokens()->pluck('token')->toArray();
-    }
-
-    public function deviceTokens()
-    {
-        return $this->hasMany(DeviceToken::class);
-    }
 }

@@ -6,17 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DoQuest | @yield('title', 'Dashboard')</title>
     <link rel="shortcut icon" href="{{ asset('images/icon-512x512.png') }}" type="image/x-icon">
+    
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
     <script src="{{ asset('js/auth.js') }}" defer></script>
     <script src="{{ asset('js/swal.js') }}" defer></script>
 
-    @if (env('APP_ENV') === 'production')
-        <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
-        <script src="{{ asset('build/assets/app.js') }}" defer></script>
-    @else
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @endif
-
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
@@ -212,35 +207,6 @@
             }
         });
     </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            if ("Notification" in window) {
-                Notification.requestPermission().then(permission => {
-                    console.log("Notification permission:", permission);
-                });
-            }
-            let shownReminders = new Set();
-            // Poll backend every 30 seconds (optional)
-            setInterval(async () => {
-                const res = await fetch('/check-reminders');
-                const data = await res.json();
-                data.reminders.forEach(reminder => {
-                    if (!shownReminders.has(reminder.id)) {
-                        new Notification("Task Reminder", {
-                            body: reminder.title,
-                            icon: "{{ asset('images/icon-512x512.png') }}"
-                        });
-                        shownReminders.add(reminder.id);
-                    }
-                });
-            }, 10000);
-        });
-    </script>
-
-
-
-
 
     <!-- Task Scripts -->
     <script>
